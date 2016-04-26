@@ -8,6 +8,10 @@ class NavbarController {
 }];
 
   isCollapsed = true;
+
+  status = {
+    "isopen":false  
+  };
   //end-non-standard
 
   constructor(Auth) {

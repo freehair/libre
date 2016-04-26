@@ -14,7 +14,13 @@
         <li ng-repeat="item in nav.menu" ui-sref-active="active">
             <a ui-sref="{{item.state}}">{{item.title}}</a>
         </li>
-        <li ui-sref-active="active"><a ui-sref="create">Create</a></li>
+        <li uib-dropdown  is-open="nav.status.isopen" uib-dropdown-toggle>
+            <a  ui-sref-active="active">Menu Création <span class="caret"></span></a>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+                <li><a ui-sref="create">Create</a></li>
+                <li><a ui-sref="grille">Grille</a></li>
+            </ul>
+        </li>
         <li ng-show="nav.isAdmin()" ui-sref-active="active"><a ui-sref="admin">Admin</a></li>
       </ul>
 

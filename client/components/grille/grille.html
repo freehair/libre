@@ -1,0 +1,117 @@
+<div class="container">
+
+    <h2 ng-if>Création d'une nouvelle grille</h2>
+
+    <form class="form-horizontal col-sm-8">
+
+        <div class="form-group">
+            <label for="name" class="col-sm-2 control-label">Nom</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="name" ng-model="grille.name"></input>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="taille" class="col-sm-2 control-label">Taille</label>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" id="taille.x" ng-model="grille.taille.x"></input>
+            </div>
+            <div class="col-sm-1">*</div>
+            <div class="col-sm-3">
+                <input type="number" class="form-control" id="taille.y" ng-model="grille.taille.y"></input>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="plaine" class="checkbox-inline">
+                                <input type="checkbox" ng-model="grille.plaine"></input>
+                                Plaine
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.plaine" ng-disabled="!grille.plaine" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="desert" class="checkbox-inline">
+                                <input type="checkbox" ng-model="grille.desert"></input>
+                                Désert
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.desert" ng-disabled="!grille.desert" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="foret" class="col-sm-2">
+                                <input type="checkbox" ng-model="grille.foret"></input>
+                                Forêt
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.foret" ng-disabled="!grille.foret" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="eau" class="col-sm-2">
+                                <input type="checkbox" ng-model="grille.eau"></input>
+                                Eau
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.eau" ng-disabled="!grille.eau" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="marais" class="col-sm-2">
+                                <input type="checkbox" ng-model="grille.marais"></input>
+                                Marais
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.marais" ng-disabled="!grille.marais" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="checkbox">
+                            <label for="montagne" class="col-sm-2">
+                                <input type="checkbox" ng-model="grille.montagne"></input>
+                                Montagne
+                            </label>
+                        </div>
+                    </td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.montagne" ng-disabled="!grille.montagne" ng-change="grille.calculTotalPourcentage()"></input>
+                    </td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <input type="number" min="0" max="100" ng-model="grille.contenu.total" disabled></input>
+                    </td>
+                </tr>
+            </table>
+            <button type="submit" class="btn btn-default" ng-click="grille.createGrille()">Créer</button>
+        </div>
+
+    </form>
+
+</div>

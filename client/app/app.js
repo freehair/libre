@@ -5,6 +5,7 @@ angular.module('libreApp', [
   'libreApp.admin',
   'libreApp.create',
   'libreApp.grille',
+  'libreApp.map',
   'libreApp.constants',
   'ngCookies',
   'ngResource',

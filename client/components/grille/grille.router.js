@@ -5,8 +5,6 @@ angular.module('libreApp.grille')
     $stateProvider
       .state('grille', {
         url: '/grille',
-        templateUrl: 'app/grille/grille.html',
-        controller: 'GrilleController',
-        controllerAs: 'grille'
-      });
+        template: '<grille></grille>'
+      })
   });

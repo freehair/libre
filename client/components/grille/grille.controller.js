@@ -4,10 +4,11 @@
 
     class GrilleController {
 
-        constructor(Grille, $state) {
+        constructor(Grille, $state, $uibModal) {
             // Use the User $resource to fetch all users
             this.Grille=Grille;
             this.$state=$state;
+            this.$modal=$uibModal;
         }
 
         delete() {
@@ -26,6 +27,28 @@
             this.Grille.setMap(item.contenu);
             this.$state.go("map");
         }
+
+        newGrille(){
+            var modalInstance = this.$modal.open({
+                templateUrl:'components/grille/grille.html',
+                controller:['$scope', '$uibModalInstance','Grille', function($scope, $modalInstance,Grille) {
+                    $scope.grille={};
+
+                    $scope.ok = function() {
+                        console.log($scope.grille);
+                        Grille.create($scope.grille);
+                        $modalInstance.close($scope.grille);
+                    };
+
+                    $scope.cancel = function() {
+                        $modalInstance.dismiss('cancel');
+                    };
+
+                }]
+            });
+        }
+
+
     }
 
     angular.module('libreApp')

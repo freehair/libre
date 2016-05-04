@@ -4,7 +4,8 @@ import mongoose from 'mongoose';
 
 var GrilleSchema = new mongoose.Schema({
   name: String,
-  contenu: [[String]]
+  tailleX:Number,
+  tailleY:Number
 });
 
 export default mongoose.model('Grille', GrilleSchema);

@@ -6,7 +6,7 @@
 
         var Grille = {
 
-            create({name,tailleX,tailleY,plaine,desert,foret,eau,marais,montagne}, callback) {
+            /*create({name,tailleX,tailleY,plaine,desert,foret,eau,marais,montagne}, callback) {
                 return $http.post('/api/grille', {
                     name: name,
                     tailleX:tailleX,
@@ -19,15 +19,22 @@
                     montagne:montagne
                 })
                 .then(res => {
-                    /*$cookies.put('token', res.data.token);
-                    currentUser = User.get();
-                    return currentUser.$promise;*/
                     return $q.resolve(res);
                 })
-                /*.then(user => {
-                    safeCb(callback)(null, user);
-                    return user;
-                })*/
+                .catch(err => {
+                    //safeCb(callback)(err.data);
+                    return $q.reject(err.data);
+                });
+            },*/
+
+            create(grille) {
+                return $http.post('/api/grille', {
+                    name: grille.name,
+                    tailleX:grille.tailleX,
+                    tailleY:grille.tailleY
+                }).then(res => {
+                    return $q.resolve(res);
+                })
                 .catch(err => {
                     //safeCb(callback)(err.data);
                     return $q.reject(err.data);

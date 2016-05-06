@@ -6,27 +6,6 @@
 
         var Grille = {
 
-            /*create({name,tailleX,tailleY,plaine,desert,foret,eau,marais,montagne}, callback) {
-                return $http.post('/api/grille', {
-                    name: name,
-                    tailleX:tailleX,
-                    tailleY:tailleY,
-                    plaine:plaine,
-                    desert:desert,
-                    foret:foret,
-                    eau:eau,
-                    marais:marais,
-                    montagne:montagne
-                })
-                .then(res => {
-                    return $q.resolve(res);
-                })
-                .catch(err => {
-                    //safeCb(callback)(err.data);
-                    return $q.reject(err.data);
-                });
-            },*/
-
             create(grille) {
                 return $http.post('/api/grille', {
                     name: grille.name,

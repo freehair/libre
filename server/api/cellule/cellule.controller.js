@@ -12,6 +12,35 @@
 import _ from 'lodash';
 import Cellule from './cellule.model';
 
+function respondListWithResult(res, statusCode) {
+  statusCode = statusCode || 200;
+  return function(entity) {
+    if (entity) {
+        let tableauCells=formatTabCells(entity);
+      //res.status(statusCode).json(entity);
+      res.status(statusCode).json(tableauCells)
+    }
+  };
+}
+
+function formatTabCells(entity) {
+    let result=[];
+    let ligne=[];
+    let cells=entity;
+    let cellPrecedente={};
+    for(var cell of entity){
+        if(cellPrecedente === {} || cellPrecedente.posX!==cell.posX){
+            result.push(ligne);
+            ligne=[];
+        }
+        ligne.push(cell);
+        cellPrecedente=cell;
+    }
+    result.push(ligne);
+    console.log("result : ", result);
+    return result;
+}
+
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
@@ -61,8 +90,8 @@ function handleError(res, statusCode) {
 
 // Gets a list of Cellules
 export function index(req, res) {
-  return Cellule.find().populate('typeTerrain grille').exec()
-    .then(respondWithResult(res))
+  return Cellule.find().populate('typeTerrain grille').sort({posX:1,posY:1}).exec()
+    .then(respondListWithResult(res))
     .catch(handleError(res));
 }
 

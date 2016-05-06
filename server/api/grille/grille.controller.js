@@ -37,7 +37,7 @@ function createCellsWithResult(res, statusCode) {
 
 
 function createCells(grille, tailleX, tailleY){
-    Terrain.find().sort({limit:1}).exec().then(function(terrains){
+    Terrain.find().sort({limit:-1}).exec().then(function(terrains){
         for (var i=0; i<tailleX;i++){
             for (var j=0; j<tailleY;j++){
                 var cell={

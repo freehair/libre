@@ -14,12 +14,10 @@
         }
 
         $onInit() {
-            console.log("onInitMap");
-            //this.map=this.Grille.getMap();
-            //console.log("map : ", this.map);
-            this.cellules=this.Grille.getCells();
-            console.log("cells : ",this.cellules)
-
+            this.Grille.getCells().then(response => {
+              console.log("onInitMapreturn : ", response.data);
+              this.cellules=response.data;
+          });
         }
 
         itemInArray(item){

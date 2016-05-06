@@ -61,7 +61,7 @@ function handleError(res, statusCode) {
 
 // Gets a list of Cellules
 export function index(req, res) {
-  return Cellule.find().exec()
+  return Cellule.find().populate('typeTerrain grille').exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
@@ -76,11 +76,11 @@ export function show(req, res) {
 
 // Creates a new Cellule in the DB
 export function create(req, res) {
-    let cellule=initialiseCellule(req.body);
-  return Cellule.create(cellule)
+  return Cellule.create(req)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
+
 
 // Updates an existing Cellule in the DB
 export function update(req, res) {

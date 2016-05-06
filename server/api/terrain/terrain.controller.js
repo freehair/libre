@@ -76,8 +76,8 @@ export function show(req, res) {
 
 // Creates a new Terrain in the DB
 export function create(req, res) {
-    let terrain=initialiseTerrain(req.body);
-  return Terrain.create(terrain)
+    //let terrain=initialiseTerrain(req.body);
+  return Terrain.create(req)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
@@ -100,4 +100,17 @@ export function destroy(req, res) {
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));
+}
+
+export function randomize(){
+   console.log("function randomize");
+   /*let number=Math.random();
+   return this.constructor.find().exec()
+       .then(function(res){
+           console.log("randomize : ", res);
+           return res
+       })
+       .catch()
+       */
+
 }

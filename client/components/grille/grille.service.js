@@ -42,7 +42,6 @@
             },
 
             list(){
-                console.log("list get grille");
                 return $http.get('/api/grille').then(res => {
                     return $q.resolve(res);
                 })
@@ -58,6 +57,16 @@
 
             getMap(){
                 return this.map;
+            },
+
+            getCells(){
+                return $http.get('/api/cellule').then(res => {
+                    return $q.resolve(res);
+                })
+                .catch(err => {
+                    //safeCb(callback)(err.data);
+                    return $q.reject(err.data);
+                });
             }
 
         };

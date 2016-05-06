@@ -13,6 +13,7 @@ import _ from 'lodash';
 import Grille from './grille.model';
 import Cellule from '../cellule/cellule.model';
 import Terrain from '../terrain/terrain.model';
+import TerrainCtrl from '../terrain/terrain.controller';
 
 function respondWithResult(res, statusCode) {
     statusCode = statusCode || 200;
@@ -22,6 +23,46 @@ function respondWithResult(res, statusCode) {
             res.status(statusCode).json(entity);
         }
     };
+}
+
+function createCellsWithResult(res, statusCode) {
+    statusCode = statusCode || 200;
+    return function(entity) {
+        if (entity) {
+            createCells(entity._id, entity.tailleX, entity.tailleY);
+            res.status(statusCode).json(entity);
+        }
+    };
+}
+
+
+function createCells(grille, tailleX, tailleY){
+    Terrain.find().sort({limit:1}).exec().then(function(terrains){
+        for (var i=0; i<tailleX;i++){
+            for (var j=0; j<tailleY;j++){
+                var cell={
+                    posX:i,
+                    posY:j,
+                    typeTerrain:randomize(terrains),
+                    grille:grille
+                }
+                console.log("cell : ",cell);
+                Cellule.create(cell);
+            }
+        }
+    });
+}
+
+function randomize(terrains){
+    //console.log("randomize terrains: ", terrains);
+    var coeff=Math.random();
+    var res;
+    for(var terrain of terrains){
+        if(coeff<=terrain.limit){
+            res=terrain.id;
+        }
+    }
+    return res;
 }
 
 function saveUpdates(updates) {
@@ -81,12 +122,7 @@ export function show(req, res) {
 export function create(req, res) {
     //let grille=initialiseGrille(req.body);
     return Grille.create(req.body)
-    .then(respondWithResult(res,201))
-    /*.then(function(res,201){
-        return respondWithResult(res, 201);
-        /*var entity=respondWithResult(res, 201);
-        console.log(entity);
-    })*/
+    .then(createCellsWithResult(res,201))
     .catch(handleError(res));
 }
 

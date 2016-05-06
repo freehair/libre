@@ -2,10 +2,14 @@
     <table class="table table-bordered">
         <tr>
             <th class="col-md-6">Grille</th>
-            <th class="col-md-6"></th>
+            <th class="col-md-1">TailleX</th>
+            <th class="col-md-1">TailleY</th>
+            <th class="col-md-4"></th>
         </tr>
         <tr ng-repeat="item in $ctrl.list" ng-click="$ctrl.consult(item)">
             <td>{{item.name}}</td>
+            <td>{{item.tailleX}}</td>
+            <td>{{item.tailleY}}</td>
             <td></td>
         </tr>
     </table>

@@ -15,7 +15,11 @@
 
         $onInit() {
             console.log("onInitMap");
-            this.map=this.Grille.getMap();
+            //this.map=this.Grille.getMap();
+            //console.log("map : ", this.map);
+            this.cellules=this.Grille.getCells();
+            console.log("cells : ",this.cellules)
+
         }
 
         itemInArray(item){

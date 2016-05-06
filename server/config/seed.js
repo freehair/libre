@@ -43,26 +43,32 @@ Thing.find({}).remove()
 Terrain.find({}).remove()
 .then(() => {
     Terrain.create({
+        _id:1,
         name:"eau",
         image:"/assets/images/terrains/eau.png",
         limit:0.4
     },{
+        _id:2,
         name:"desert",
         image:"/assets/images/terrains/desert.png",
         limit:0.6
     },{
+        _id:3,
         name:"marais",
         image:"/assets/images/terrains/marais.png",
         limit:0.65
     },{
+        _id:4,
         name:"foret",
         image:"/assets/images/terrains/foret.png",
         limit:0.75
     },{
+        _id:5,
         name:"plaine",
         image:"/assets/images/terrains/plaine.png",
         limit:0.95
     },{
+        _id:6,
         name:"montagne",
         image:"/assets/images/terrains/montagne.png",
         limit:1

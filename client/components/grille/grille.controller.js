@@ -24,7 +24,7 @@
 
         consult(item){
             console.log("consult");
-            this.Grille.setMap(item.contenu);
+            this.Grille.setMap(item._id);
             this.$state.go("map");
         }
 

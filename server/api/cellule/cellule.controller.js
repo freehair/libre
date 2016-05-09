@@ -29,15 +29,18 @@ function formatTabCells(entity) {
     let cells=entity;
     let cellPrecedente={};
     for(var cell of entity){
-        if(cellPrecedente === {} || cellPrecedente.posX!==cell.posX){
-            result.push(ligne);
+        if(cellPrecedente !== {} && cellPrecedente.posX!==cell.posX){
+            //console.log("ligne : ",ligne);
+            if (ligne.length>0){
+                result.push(ligne);
+            }
             ligne=[];
         }
         ligne.push(cell);
         cellPrecedente=cell;
     }
     result.push(ligne);
-    console.log("result : ", result);
+    //console.log("result : ", result);
     return result;
 }
 

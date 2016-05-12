@@ -38,8 +38,8 @@
                 return this.map;
             },
 
-            getCells(){
-                return $http.get('/api/cellule').then(res => {
+            getGrilleById(id){
+                return $http.get('/api/grille/'+id).then(res =>{
                     return $q.resolve(res);
                 })
                 .catch(err => {
@@ -47,6 +47,16 @@
                     return $q.reject(err.data);
                 });
             }
+
+            /*getCells(){
+                return $http.get('/api/cellule/grille/'+this.map).then(res => {
+                    return $q.resolve(res);
+                })
+                .catch(err => {
+                    //safeCb(callback)(err.data);
+                    return $q.reject(err.data);
+                });
+            }*/
 
         };
 

@@ -15,10 +15,11 @@ import Cellule from './cellule.model';
 function respondListWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
+    console.log("entity : ", entity);
     if (entity) {
         let tableauCells=formatTabCells(entity);
-      //res.status(statusCode).json(entity);
-      res.status(statusCode).json(tableauCells)
+        //res.status(statusCode).json(entity);
+        res.status(statusCode).json(tableauCells)
     }
   };
 }
@@ -113,7 +114,6 @@ export function create(req, res) {
     .catch(handleError(res));
 }
 
-
 // Updates an existing Cellule in the DB
 export function update(req, res) {
   if (req.body._id) {
@@ -133,3 +133,14 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+/*export function indexByGrille(req,res) {
+    console.log('indexByGrille : ', req.params);
+    return Cellule.find()
+        .populate('grille', , {'_id': req.params.id})
+        .populate('typeTerrain')
+        .exec()
+    //return Cellule.find().populate('typeTerrain grille').where('grille._id').gt(req.params.id).exec()
+    .then(respondListWithResult(res))
+    .catch(handleError(res));
+}*/

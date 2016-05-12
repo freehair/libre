@@ -14,9 +14,9 @@
         }
 
         $onInit() {
-            this.Grille.getCells().then(response => {
+            this.Grille.getGrilleById(this.Grille.getMap()).then(response => {
               console.log("onInitMapreturn : ", response.data);
-              this.cellules=response.data;
+              this.map=response.data;
           });
         }
 

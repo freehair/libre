@@ -15,16 +15,14 @@
         }
 
         $onInit() {
-            console.log("onInit");
             this.Grille.list().then(response => {
-              console.log("onInitreturn");
               this.list=response.data;
           });
         }
 
         consult(item){
-            console.log("consult");
             this.Grille.setMap(item._id);
+            console.log('grille._id : ', item._id);
             this.$state.go("map");
         }
 

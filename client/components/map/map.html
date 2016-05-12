@@ -2,7 +2,7 @@
     <div class="row">
         <div class="table-responsive col-md-5">
             <table class="table">
-                <tr ng-repeat="items in $ctrl.cellules">
+                <tr ng-repeat="items in $ctrl.map.cellules">
                     <td ng-repeat="item in items">
                         <img ng-src="{{item.typeTerrain.image}}" alt="{{item}}">
                     <!-- <td>{{items}}</td> -->

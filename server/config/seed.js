@@ -46,12 +46,12 @@ Terrain.find({}).remove()
         _id:1,
         name:"eau",
         image:"/assets/images/terrains/eau.png",
-        limit:0.4
+        limit:1
     },{
         _id:2,
         name:"desert",
         image:"/assets/images/terrains/desert.png",
-        limit:0.6
+        limit:0.2
     },{
         _id:3,
         name:"marais",
@@ -61,17 +61,17 @@ Terrain.find({}).remove()
         _id:4,
         name:"foret",
         image:"/assets/images/terrains/foret.png",
-        limit:0.75
+        limit:0.6
     },{
         _id:5,
         name:"plaine",
         image:"/assets/images/terrains/plaine.png",
-        limit:0.95
+        limit:0.5
     },{
         _id:6,
         name:"montagne",
         image:"/assets/images/terrains/montagne.png",
-        limit:1
+        limit:0.3
     });
 });
 

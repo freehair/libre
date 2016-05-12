@@ -1,20 +1,26 @@
 <div class="lib-maps container-fluid">
-    <div class="row">
+    <div class="row-fluid">
         <div class="table-responsive col-md-5">
             <table class="table">
                 <tr ng-repeat="items in $ctrl.map.cellules">
-                    <td ng-repeat="item in items">
+                    <td ng-repeat="item in items" ng-click="$ctrl.infoCellule(item)">
                         <img ng-src="{{item.typeTerrain.image}}" alt="{{item}}">
-                    <!-- <td>{{items}}</td> -->
-                    <!-- <td ng-repeat="item in "> -->
-
                     </td>
                 </tr>
             </table>
         </div>
         <div class="col-md-7">
             <h3>Informations complémentaires</h3>
-
+            <div ng-if="$ctrl.infoCell.eau">
+                <div>
+                    posX : {{$ctrl.infoCell.posX}} - posY : {{$ctrl.infoCell.posY}}<br>
+                    quantité d'eau : {{$ctrl.infoCell.eau}}
+                </div>
+                <div>
+                    <input type="button" ng-click="ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)">+1 plante</input>
+                    <input type="button" ng-click="ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)">+10 plantes</input>
+                </div>
+            </div>
         </div>
     </div>
 </div>

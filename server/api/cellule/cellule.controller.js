@@ -15,7 +15,7 @@ import Cellule from './cellule.model';
 function respondListWithResult(res, statusCode) {
   statusCode = statusCode || 200;
   return function(entity) {
-    console.log("entity : ", entity);
+    //console.log("entity : ", entity);
     if (entity) {
         let tableauCells=formatTabCells(entity);
         //res.status(statusCode).json(entity);

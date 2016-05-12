@@ -31,7 +31,7 @@ function respondWithResultAndFormatCells(res, statusCode){
     return function(entity) {
         if (entity) {
             let tableauCells=formatTabCells(entity.cellules);
-            console.log("tableauCells : ",tableauCells);
+            //console.log("tableauCells : ",tableauCells);
             //entity.cellules=tableauCells;
             let result={};
             result.grille=entity;
@@ -60,7 +60,7 @@ function createCells(grilleName, tailleX, tailleY){
     grille.tailleX=tailleX;
     grille.tailleY=tailleY;
     initCells(grille).then(function(data){
-        console.log("data : ", data);
+        //console.log("data : ", data);
         //grille.cellules.push(cells);
         //console.log("grille cells : ", grille);
         deferred.resolve(data);
@@ -79,7 +79,8 @@ function initCells(grille){
                 var cell=new Cellule();
                 cell.posX=i;
                 cell.posY=j;
-                cell.typeTerrain=randomize(terrains);
+                cell.eau=Math.random();
+                cell.typeTerrain=randomize(terrains, cell.eau);
                 grille.cellules.push(cell);
             }
         }
@@ -89,9 +90,9 @@ function initCells(grille){
     return deferred.promise;
 }
 
-function randomize(terrains){
+function randomize(terrains, eau){
     //console.log("randomize terrains: ", terrains);
-    var coeff=Math.random();
+    var coeff=eau;
     var res;
     for(var terrain of terrains){
         if(coeff<=terrain.limit){

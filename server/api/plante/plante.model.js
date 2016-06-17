@@ -5,9 +5,10 @@ import {Schema} from 'mongoose';
 import EtreVivant from '../etreVivant/etreVivant.model';
 
 var PlanteSchema = new mongoose.Schema({
-  vie: EtreVivant,
+  vie: EtreVivant.schema,
   posX:Number,
-  posY:Number
+  posY:Number,
+  type:String,
 });
 
 export default mongoose.model('Plante', PlanteSchema);

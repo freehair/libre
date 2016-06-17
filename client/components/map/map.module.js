@@ -2,5 +2,6 @@
 
 angular.module('libreApp.map', [
   'ui.router',
-  'libreApp.grille'
+  'libreApp.grille',
+  'libreApp.filters'
 ]);

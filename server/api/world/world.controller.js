@@ -1,17 +1,17 @@
 /**
 * Using Rails-like standard naming convention for endpoints.
-* GET     /api/Grilles              ->  index
-* POST    /api/Grilles              ->  create
-* GET     /api/Grilles/:id          ->  show
-* PUT     /api/Grilles/:id          ->  update
-* DELETE  /api/Grilles/:id          ->  destroy
+* GET     /api/Worlds              ->  index
+* POST    /api/Worlds              ->  create
+* GET     /api/Worlds/:id          ->  show
+* PUT     /api/Worlds/:id          ->  update
+* DELETE  /api/Worlds/:id          ->  destroy
 */
 
 'use strict';
 
 import _ from 'lodash';
 import Q from 'q';
-import Grille from './grille.model';
+import World from './world.model';
 import Cellule from '../cellule/cellule.model';
 import Terrain from '../terrain/terrain.model';
 import TerrainCtrl from '../terrain/terrain.controller';
@@ -34,7 +34,7 @@ function respondWithResultAndFormatCells(res, statusCode){
             //console.log("tableauCells : ",tableauCells);
             //entity.cellules=tableauCells;
             let result={};
-            result.grille=entity;
+            result.world=entity;
             result.cellules=tableauCells;
             //console.log("entity : ",entity);
             res.status(statusCode).json(result);
@@ -53,40 +53,40 @@ function respondWithResultAndFormatCells(res, statusCode){
 }*/
 
 
-function createCells(grilleName, tailleX, tailleY){
+function createCells(worldName, tailleX, tailleY){
     var deferred = Q.defer();
-    let grille=new Grille();
-    grille.name=grilleName;
-    grille.tailleX=tailleX;
-    grille.tailleY=tailleY;
-    grille.timer=0;
-    initCells(grille).then(function(data){
+    let world=new World();
+    world.name=worldName;
+    world.tailleX=tailleX;
+    world.tailleY=tailleY;
+    world.timer=0;
+    initCells(world).then(function(data){
         //console.log("data : ", data);
-        //grille.cellules.push(cells);
-        //console.log("grille cells : ", grille);
+        //world.cellules.push(cells);
+        //console.log("world cells : ", world);
         deferred.resolve(data);
     });
 
     return deferred.promise;
 }
 
-function initCells(grille){
+function initCells(world){
     var deferred = Q.defer();
     //var cellules=[];
     Terrain.find().sort({limit:-1}).exec().then(function(terrains){
-        for (var i=0; i<grille.tailleX;i++){
-            for (var j=0; j<grille.tailleY;j++){
-                //grille.cellules.push(new Cellule());
+        for (var i=0; i<world.tailleX;i++){
+            for (var j=0; j<world.tailleY;j++){
+                //world.cellules.push(new Cellule());
                 var cell=new Cellule();
                 cell.posX=i;
                 cell.posY=j;
                 cell.eau=Math.random();
                 cell.typeTerrain=randomize(terrains, cell.eau);
-                grille.cellules.push(cell);
+                world.cellules.push(cell);
             }
         }
-        //console.log("grille : ", grille);
-        deferred.resolve(grille);
+        //console.log("world : ", world);
+        deferred.resolve(world);
     });
     return deferred.promise;
 }
@@ -143,16 +143,16 @@ function handleError(res, statusCode) {
     };
 }
 
-// Gets a list of Grilles
+// Gets a list of Worlds
 export function index(req, res) {
-    return Grille.find().exec()
+    return World.find().exec()
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
-// Gets a single Grille from the DB
+// Gets a single World from the DB
 export function show(req, res) {
-    return Grille.findById(req.params.id).populate('cellules.typeTerrain cellules.contenu').exec()
+    return World.findById(req.params.id).populate('cellules.typeTerrain cellules.contenu').exec()
     .then(handleEntityNotFound(res))
     .then(respondWithResultAndFormatCells(res))
     .catch(handleError(res));
@@ -182,35 +182,35 @@ function formatTabCells(entity) {
 
 
 
-// Creates a new Grille in the DB
+// Creates a new World in the DB
 export function create(req, res) {
     //console.log("req.body : ",req.body);
-    createCells(req.body.name, req.body.tailleX, req.body.tailleY).then(function(grille) {
-        //console.log("grille : ", grille);
-        return Grille.create(grille)
+    createCells(req.body.name, req.body.tailleX, req.body.tailleY).then(function(world) {
+        //console.log("world : ", world);
+        return World.create(world)
             .then(respondWithResult(res,201))
             .catch(handleError(res));
     });
 }
 
-// Updates an existing Grille in the DB
+// Updates an existing World in the DB
 export function update(req, res) {
     //console.log("req.body : ", req.body);
-    if (req.body.grille._id) {
-        delete req.body.grille._id;
+    if (req.body.world._id) {
+        delete req.body.world._id;
     }
     //console.log("req.params : ", req.params);
-    return Grille.findById(req.params.id).exec()
+    return World.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body.grille)) //req.body
+    .then(saveUpdates(req.body.world)) //req.body
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
 
 
-// Deletes a Grille from the DB
+// Deletes a World from the DB
 export function destroy(req, res) {
-    return Grille.findById(req.params.id).exec()
+    return World.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
     .then(removeEntity(res))
     .catch(handleError(res));

@@ -1,4 +1,4 @@
-'use strict';
+/*'use strict';
 
 angular.module('libreApp.grille')
   .config(function($stateProvider) {
@@ -7,9 +7,4 @@ angular.module('libreApp.grille')
         url: '/grille',
         template: '<grille></grille>'
       })
-
-      .state('test', {
-        url: '/test',
-        template: '<test></test>'
-    })
-  });
+  });*/

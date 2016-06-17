@@ -14,6 +14,7 @@ export default function(app) {
 
   app.use('/auth', require('./auth').default);
 
+  app.use('/api/world', require('./api/world'));
   app.use('/api/grille', require('./api/grille'));
   app.use('/api/cellule', require('./api/cellule'));
   app.use('/api/plante', require('./api/plante'));

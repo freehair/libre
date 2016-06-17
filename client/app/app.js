@@ -7,6 +7,7 @@ angular.module('libreApp', [
   'libreApp.grille',
   'libreApp.map',
   'libreApp.constants',
+  'libreApp.world',
   'ngCookies',
   'ngResource',
   'ngSanitize',

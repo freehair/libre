@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import {Schema} from 'mongoose';
 import Cellule from '../cellule/cellule.model';
 
-var GrilleSchema = new mongoose.Schema({
+var WorldSchema = new mongoose.Schema({
   name: String,
   tailleX:Number,
   tailleY:Number,
@@ -12,4 +12,4 @@ var GrilleSchema = new mongoose.Schema({
   timer:Number
 });
 
-export default mongoose.model('Grille', GrilleSchema);
+export default mongoose.model('World', WorldSchema);

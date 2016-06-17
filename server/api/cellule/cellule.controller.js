@@ -55,6 +55,7 @@ function respondWithResult(res, statusCode) {
 }
 
 function saveUpdates(updates) {
+    console.log("updates : ",updates);
   return function(entity) {
     var updated = _.merge(entity, updates);
     return updated.save()
@@ -116,12 +117,14 @@ export function create(req, res) {
 
 // Updates an existing Cellule in the DB
 export function update(req, res) {
+    //console.log("req update cell : ",req);
   if (req.body._id) {
     delete req.body._id;
   }
+  console.log("req.params.id : ", req.params.id);
   return Cellule.findById(req.params.id).exec()
     .then(handleEntityNotFound(res))
-    .then(saveUpdates(req.body))
+    .then(saveUpdates(req.body.cellule))
     .then(respondWithResult(res))
     .catch(handleError(res));
 }

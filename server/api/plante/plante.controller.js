@@ -11,6 +11,9 @@
 
 import _ from 'lodash';
 import Plante from './plante.model';
+import EtreVivant from '../etreVivant/etreVivant.model';
+//import Deplacement from '../deplacement/deplacement.model'
+var deplacementController = require('../deplacement/deplacement.controller.js');
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -77,6 +80,7 @@ export function show(req, res) {
 // Creates a new Plante in the DB
 export function create(req, res) {
     let plante=initialisePlante(req.body);
+    //console.log("new plante before create : ", plante.vie.deplacement);
   return Plante.create(plante)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
@@ -86,13 +90,20 @@ function initialisePlante(req, res){
     let newPlante=new Plante();
     newPlante.posX=req.posX;
     newPlante.posY=req.posY;
+    newPlante.type="plante";
+    newPlante.vie=new EtreVivant();
     newPlante.vie.ageMax=400;
     newPlante.vie.ageReproduction=20;
     newPlante.vie.chanceReproduction=0.1;
     newPlante.vie.vitesse=1;//1=lent
-    newPlante.vie.deplacement=100;
-    var rand = new Random();
-    newPlante.sexe=rand.nextInt(2);
+    //newPlante.vie.deplacement=[];
+    newPlante.vie.deplacement=deplacementController.createDep(0.5,0,0.7,1,0.5,0.2);
+    /*deplacementController.createDep(0.5,0,0.7,1,0.5,0.2).then(function(data){
+        console.log("temp test : ", data);
+    });*/
+    console.log("new plante before create : ", newPlante.vie.deplacement);
+    newPlante.vie.sexe=Math.floor(Math.random()) + 1;
+    console.log("new plante : ", newPlante);
     return newPlante;
 }
 

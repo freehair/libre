@@ -1,26 +1,48 @@
 <div class="lib-maps container-fluid">
     <div class="row-fluid">
         <div class="table-responsive col-md-5">
+            <div>
+                <input class="btn btn-success" type="button" ng-click="$ctrl.$scope.timerStart($ctrl)" value="Start"></input>
+                <input class="btn btn-error" type="button" ng-click="$ctrl.$scope.timerPause($ctrl)" value="End"></input>
+                Timer: {{$ctrl.map.grille.timer}}
+            </div>
             <table class="table">
                 <tr ng-repeat="items in $ctrl.map.cellules">
-                    <td ng-repeat="item in items" ng-click="$ctrl.infoCellule(item)">
+                    <td ng-repeat="item in items" ng-click="$ctrl.infoCellule(item, ($parent.$index*items.length)+$index)">
                         <img ng-src="{{item.typeTerrain.image}}" alt="{{item}}">
                     </td>
                 </tr>
             </table>
         </div>
         <div class="col-md-7">
-            <h3>Informations complémentaires</h3>
+            <h2>Informations complémentaires</h2>
+            <div>
+                <h3>Total</h3>
+                <ul>
+                    <li ng-repeat="(type, nombre) in $ctrl.infoGrille">{{type}} : {{nombre}}</li>
+                </ul>
+
+            </div>
             <div ng-if="$ctrl.infoCell.eau">
+                <h3>Cellule selectionnée</h3>
                 <div>
                     posX : {{$ctrl.infoCell.posX}} - posY : {{$ctrl.infoCell.posY}}<br>
-                    quantité d'eau : {{$ctrl.infoCell.eau}}
+                    quantité d'eau : {{$ctrl.infoCell.eau | formatPercent}}
                 </div>
                 <div>
-                    <input type="button" ng-click="ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)">+1 plante</input>
-                    <input type="button" ng-click="ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)">+10 plantes</input>
+                    <input class="btn btn-default" type="button" ng-click="$ctrl.ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)" value="+1 plante"></input>
+                    <input class="btn btn-default" type="button" ng-click="$ctrl.ajoutPlante($ctrl.infoCell.posX, $ctrl.infoCell.posY)" value="+10 plantes"></input>
                 </div>
+                <ul ng-if="$ctrl.infoCell">
+                    <li ng-repeat="espece in $ctrl.infoCell.contenu">{{espece.type}}
+                        <ul>
+                            <li>Age : {{espece.vie.age}}</li>
+                            <li>Sexe : {{espece.vie.sexe}}</li>
+                        </ul>
+                    </li>
+                </ul>
             </div>
+
         </div>
     </div>
 </div>

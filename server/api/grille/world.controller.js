@@ -208,6 +208,30 @@ export function update(req, res) {
 }
 
 
+/**
+ * Change a users password
+ */
+/*export function changePassword(req, res, next) {
+  var userId = req.user._id;
+  var oldPass = String(req.body.oldPassword);
+  var newPass = String(req.body.newPassword);
+
+  return User.findById(userId).exec()
+    .then(user => {
+      if (user.authenticate(oldPass)) {
+        user.password = newPass;
+        return user.save()
+          .then(() => {
+            res.status(204).end();
+          })
+          .catch(validationError(res));
+      } else {
+        return res.status(403).end();
+      }
+    });
+}*/
+
+
 // Deletes a Grille from the DB
 export function destroy(req, res) {
     return Grille.findById(req.params.id).exec()

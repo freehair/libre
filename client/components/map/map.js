@@ -4,23 +4,67 @@
 
     class MapController {
 
-        constructor(Grille ,Map , $state) {
+        constructor(Grille ,Map , $state, $interval, $scope) {
             // Use the User $resource to fetch all users
             this.Grille=Grille;
             this.Map=Map;
             this.$state=$state;
+            this.$interval=$interval;
+            this.$scope=$scope;
         }
 
         delete() {
         }
 
         $onInit() {
-            this.infoCell={};
-            this.Grille.getGrilleById(this.Grille.getMap()).then(response => {
-              //console.log("onInitMapreturn : ", response.data);
-              this.map=response.data;
-          });
+            //Init scope
+            this.$scope.updateTick = function(self){
+                console.log("timer + 1");
+                self.map.grille.timer++;
+                console.log("timer : ", self.map.grille.timer);
+            };
+
+            this.$scope.timerStart = function(self){
+                console.log("debut timer");
+                //var self=this;
+                self.timerPlay = self.$interval(
+                    function(){
+                        self.$scope.updateTick(self);
+                    },3000
+                );
+            }
+
+            this.$scope.timerPause = function(self){
+                console.log("fin timer");
+                //clearInterval(this.timerPlay);
+                if (angular.isDefined(self.timerPlay)) {
+                    self.$interval.cancel(self.timerPlay);
+                    self.timerPlay = undefined;
+                    //self.saveGrille();
+                }
+            }
+
+            let tempGrille=this.Grille.getMap();
+            console.log("tempGrille : ", tempGrille);
+            if (!tempGrille){
+                this.$state.go("grille");
+            }else{
+                var self = this;
+                //this.time=0;
+                //this.timerPlay=false;
+
+                this.Grille.getGrilleById(tempGrille).then(response => {
+                    //console.log("onInitMapreturn : ", response.data);
+                    self.map=response.data;
+                    //console.log("self.map : ", self.map);
+                    self.infoGrille={};
+                    self.infoGrille=self.Map.calculNbBySpeces(self.map);
+                    //console.log("self.infoGrille : ", self.infoGrille);
+                });
+            }
         }
+
+
 
         itemInArray(item){
             let result=item.split(",");
@@ -45,16 +89,24 @@
             return result;
         }
 
-        infoCellule(cellule){
+        infoCellule(cellule, cellIndex){
             this.infoCell=cellule;
+            this.cellIndex=cellIndex;
+            //console.log("infoCell : ", this.infoCell);
         }
 
         ajoutPlante(x,y,nb){
+            //console.log("cellIndex : ", this.cellIndex);
             if (!nb){nb=1;}
             for (var i=0; i<nb; i++){
-                this.Map.createPlante(x,y);
+                this.Map.createPlante(this.map.grille,this.infoCell, this.cellIndex,x,y);
             }
         }
+
+        /*this.saveMap = function(){
+            console.log("Save here this.map.grille : ", this.map.grille);
+            //this.Map.saveMap(this.map.grille);
+        };*/
 
     }
 

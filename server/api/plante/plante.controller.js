@@ -96,13 +96,18 @@ function initialisePlante(req, res){
     newPlante.vie.ageReproduction=20;
     newPlante.vie.chanceReproduction=0.1;
     newPlante.vie.vitesse=1;//1=lent
+    newPlante.vie.cellule=req.cellule;
+    newPlante.vie.parcours.push(req.cellule);
+    newPlante.vie.dateBirth=req.dateBirth;
+    newPlante.vie.reproEnCours=0;
+    newPlante.vie.gestation=1;
     //newPlante.vie.deplacement=[];
     newPlante.vie.deplacement=deplacementController.createDep(0.5,0,0.7,1,0.5,0.2);
     /*deplacementController.createDep(0.5,0,0.7,1,0.5,0.2).then(function(data){
         console.log("temp test : ", data);
     });*/
     console.log("new plante before create : ", newPlante.vie.deplacement);
-    newPlante.vie.sexe=Math.floor(Math.random()) + 1;
+    newPlante.vie.sexe=Math.floor(Math.random()*2) + 1;
     console.log("new plante : ", newPlante);
     return newPlante;
 }

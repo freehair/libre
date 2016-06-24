@@ -195,7 +195,7 @@ export function create(req, res) {
 
 // Updates an existing World in the DB
 export function update(req, res) {
-    //console.log("req.body : ", req.body);
+    console.log("req.body : ", req.body);
     if (req.body.world._id) {
         delete req.body.world._id;
     }

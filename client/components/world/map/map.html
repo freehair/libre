@@ -4,7 +4,8 @@
             <div>
                 <input class="btn btn-success" type="button" ng-click="$ctrl.$scope.timerStart($ctrl)" value="Start"></input>
                 <input class="btn btn-error" type="button" ng-click="$ctrl.$scope.timerPause($ctrl)" value="End"></input>
-                Timer: {{$ctrl.map.grille.timer}}
+                <input class="btn btn-warning" type="button" ng-click="$ctrl.afficheLog()" value="Log"></input>
+                Timer: {{$ctrl.map.world.timer}}
             </div>
             <table class="table">
                 <tr ng-repeat="items in $ctrl.map.cellules">
@@ -19,7 +20,7 @@
             <div>
                 <h3>Total</h3>
                 <ul>
-                    <li ng-repeat="(type, nombre) in $ctrl.infoGrille">{{type}} : {{nombre}}</li>
+                    <li ng-repeat="(type, nombre) in $ctrl.infoWorld">{{type}} : {{nombre}}</li>
                 </ul>
 
             </div>
@@ -38,6 +39,14 @@
                         <ul>
                             <li>Age : {{espece.vie.age}}</li>
                             <li>Sexe : {{espece.vie.sexe}}</li>
+                            <li>Date de naissance : {{espece.vie.dateBirth}}</li>
+                            <li>Parcours :
+                                <ul>
+                                    <li ng-repeat="cellParcouru in espece.vie.parcours track by $index">
+                                        {{cellParcouru}}
+                                    </li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                 </ul>

@@ -4,24 +4,36 @@
 
     class MapController {
 
-        constructor(Grille ,Map , $state, $interval, $scope) {
+        constructor(World ,Map , $state, $interval, $scope, $q) {
             // Use the User $resource to fetch all users
-            this.Grille=Grille;
+            this.World=World;
             this.Map=Map;
             this.$state=$state;
             this.$interval=$interval;
             this.$scope=$scope;
+            this.$q=$q;
         }
 
         delete() {
+            /*if (this.timerPlay){
+                this.$interval.cancel(this.timerPlay);
+                this.timerPlay = undefined;
+                this.saveWorld();
+            }*/
         }
 
         $onInit() {
             //Init scope
             this.$scope.updateTick = function(self){
-                console.log("timer + 1");
-                self.map.grille.timer++;
-                console.log("timer : ", self.map.grille.timer);
+                var defer = self.$q.defer();
+                self.map.world.timer++;
+                self.updateWorld().then(res=>{
+                    self.saveWorld().then(resSave=>{
+                        console.log("saveOk");
+                        defer.resolve(resSave);
+                    });
+                });
+                return defer.promise;
             };
 
             this.$scope.timerStart = function(self){
@@ -29,7 +41,7 @@
                 //var self=this;
                 self.timerPlay = self.$interval(
                     function(){
-                        self.$scope.updateTick(self);
+                        return self.$scope.updateTick(self);
                     },3000
                 );
             }
@@ -40,30 +52,37 @@
                 if (angular.isDefined(self.timerPlay)) {
                     self.$interval.cancel(self.timerPlay);
                     self.timerPlay = undefined;
-                    //self.saveGrille();
+                    /*self.saveWorld().then(resSave=>{
+                        console.log("saveOk");
+                    });*/
                 }
             }
+            this.initWorld();
+        }
 
-            let tempGrille=this.Grille.getMap();
-            console.log("tempGrille : ", tempGrille);
-            if (!tempGrille){
-                this.$state.go("grille");
+        initWorld(){
+            var defer = this.$q.defer();
+            let tempWorld=this.World.getWorld();
+            //console.log("tempWorld : ", tempWorld);
+            if (!tempWorld){
+                this.$state.go("world");
             }else{
                 var self = this;
                 //this.time=0;
                 //this.timerPlay=false;
 
-                this.Grille.getGrilleById(tempGrille).then(response => {
+                this.World.getWorldById(tempWorld).then(response => {
                     //console.log("onInitMapreturn : ", response.data);
                     self.map=response.data;
                     //console.log("self.map : ", self.map);
-                    self.infoGrille={};
-                    self.infoGrille=self.Map.calculNbBySpeces(self.map);
-                    //console.log("self.infoGrille : ", self.infoGrille);
+                    self.infoWorld={};
+                    self.infoWorld=self.Map.calculNbBySpeces(self.map);
+                    //console.log("self.infoWorld : ", self.infoWorld);
+                    defer.resolve(response);
                 });
             }
+            return defer;
         }
-
 
 
         itemInArray(item){
@@ -99,20 +118,36 @@
             //console.log("cellIndex : ", this.cellIndex);
             if (!nb){nb=1;}
             for (var i=0; i<nb; i++){
-                this.Map.createPlante(this.map.grille,this.infoCell, this.cellIndex,x,y);
+                this.Map.createPlante(this.map.world,this.cellIndex,x,y);
+                this.saveWorld();
             }
         }
 
-        /*this.saveMap = function(){
-            console.log("Save here this.map.grille : ", this.map.grille);
-            //this.Map.saveMap(this.map.grille);
-        };*/
+        saveWorld(){
+            var defer = this.$q.defer();
+            //console.log("Save here this.map.world : ", this.map.world);
+            this.World.saveWorld(this.map.world).then(response => {
+                //console.log("reponse saveWorld : ", response);
+                this.initWorld().then(res=>{
+                    defer.resolve(res);
+                });
+            });
+            return defer;
+        }
+
+        updateWorld(){
+            return this.Map.updateWorldPlusOne(this.map.world);
+        }
+
+        afficheLog(){
+            console.log('map : ',this.map);
+        }
 
     }
 
     angular.module('libreApp')
       .component('map', {
-        templateUrl: 'components/map/map.html',
+        templateUrl: 'components/world/map/map.html',
         controller: MapController
       });
 

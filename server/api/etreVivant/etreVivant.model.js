@@ -15,7 +15,12 @@ var EtreVivantSchema = new mongoose.Schema({
   chanceReproduction:Number,
   sexe:{ type: Number, enum: sexEnum },
   vitesse:{ type: String, enum: vitesseDep},
-  deplacement:[Deplacement.schema]
+  deplacement:[Deplacement.schema],
+  cellule:Number,
+  parcours:[Number],
+  dateBirth:Number,
+  reproEnCours:Number,
+  gestation:Number
 });
 
 export default mongoose.model('EtreVivant', EtreVivantSchema);

@@ -40,12 +40,12 @@
                 });
             },
 
-            setMap(map){
-                this.map=map;
+            setWorld(world){
+                this.currentWorld=world;
             },
 
-            getMap(){
-                return this.map;
+            getWorld(){
+                return this.currentWorld;
             },
 
             getWorldById(id){
@@ -56,17 +56,18 @@
                     //safeCb(callback)(err.data);
                     return $q.reject(err.data);
                 });
-            }
+            },
 
-            /*getCells(){
-                return $http.get('/api/cellule/world/'+this.map).then(res => {
+            saveWorld(world){
+                //console.log("test saveWorld ok", world);
+                // PUT     /api/Worlds/:id          ->  update
+                return $http.put('/api/world/'+world._id, {world: world}).then(res =>{
                     return $q.resolve(res);
                 })
                 .catch(err => {
-                    //safeCb(callback)(err.data);
                     return $q.reject(err.data);
                 });
-            }*/
+            }
 
         };
 

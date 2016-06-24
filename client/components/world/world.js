@@ -21,9 +21,9 @@
         }
 
         consult(item){
-            this.World.setMap(item._id);
+            this.World.setWorld(item._id);
             //console.log('world._id : ', item._id);
-            //this.$state.go("map");
+            this.$state.go("map");
         }
 
         newWorld(){
@@ -69,7 +69,7 @@
 
     angular.module('libreApp')
       .component('world', {
-        templateUrl: 'components/world/list.html',
+        templateUrl: 'components/world/world.html',
         controller: WorldCtrl
       });
 
